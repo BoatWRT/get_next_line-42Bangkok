@@ -23,8 +23,11 @@
 # endif
 
 char	*get_next_line(int fd);
-char *ft_strchr(char *str, int c)
-char *ft_strjoin(char *s1, char *s2)
-int ft_strlen(char *str)
+char	read_first_line(int fd, char *str);
+char	*get_first_line(char *str);
+char	*remove_first_line(char *str);
+char	*ft_strchr(char *str, int c);
+char	*ft_strjoin(char *s1, char *s2);
+int		ft_strlen(char *str);
 
 #endif
