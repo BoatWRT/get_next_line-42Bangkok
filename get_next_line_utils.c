@@ -47,7 +47,7 @@ char	*ft_strchr(char *str, int c)
 }
 
 // [string join (concatenate )] Takes two strings as input and concatenates them together into a new string.
-// given s1 = full_str, s2 = buffer
+// given s1 = *str, s2 = buffer
 char	*ft_strjoin(char *s1, char *s2)
 {
 	size_t		i;
