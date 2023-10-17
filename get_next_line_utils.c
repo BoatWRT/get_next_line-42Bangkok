@@ -36,7 +36,7 @@ char	*ft_strchr(char *str, int c)
 		return (NULL);
 	// return poointer to null terminator character
 	if (c == '\0')
-		return ((char *)&str[ft_strlen(s)]);
+		return ((char *)&str[ft_strlen(str)]);
 	while (str[i] != '\0')
 	{
 		if (str[i] == (char)c)
