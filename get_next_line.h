@@ -23,5 +23,8 @@
 # endif
 
 char	*get_next_line(int fd);
+char *ft_strchr(char *str, int c)
+char *ft_strjoin(char *s1, char *s2)
+int ft_strlen(char *str)
 
 #endif
