@@ -11,12 +11,11 @@
 /* ************************************************************************** */
 
 // This is a function that returns a line read from a file descriptor.
-
 #include "get_next_line.h"
 
 char	*get_next_line(int fd)
 {
-		static char	*full_str;
+		static char *full_str;
 		char		*line;
 
 		if (fd < 0 || BUFFER_SIZE <= 0)
@@ -33,7 +32,7 @@ char	*get_next_line(int fd)
 }
 
 // read first line of fd
-char read_first_line(int fd, char *str)
+char *read_first_line(int fd, char *str)
 {
 	char *buffer;
 	int nbytes_read;
@@ -115,7 +114,11 @@ char *remove_first_line(char *str)
 	return (rest_str);
 }
 
-
+/*
+if wanna test
+ gcc -Wall -Wextra -Werror -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.c
+#include <fcntl.h>
+#include <stdio.h>
 int	main(void)
 {
 	int	fd;
@@ -130,4 +133,4 @@ int	main(void)
 	printf("%s\n", line);
 	return (0);
 }
-
+*/
