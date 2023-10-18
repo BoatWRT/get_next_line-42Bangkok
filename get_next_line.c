@@ -6,7 +6,7 @@
 /*   By: <wtangcha> <wtangcha@student.42bangkok.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 10:37:50 by <wtangcha>        #+#    #+#             */
-/*   Updated: 2023/10/03 11:42:34 by <wtangcha>       ###   ########.fr       */
+/*   Updated: 2023/10/18 10:41:53 by <wtangcha>       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,37 +15,34 @@
 
 char	*get_next_line(int fd)
 {
-		static char *full_str;
-		char		*line;
+	static char	*full_str;
+	char		*line;
 
-		if (fd < 0 || BUFFER_SIZE <= 0)
-			return (NULL);
-		// read first line of fd
-		full_str = read_first_line(fd, full_str);
-		if (!full_str)
-			return (NULL);
-		// from the read string ,take the first line and return it
-		line = get_first_line(full_str);
-		// from the read string ,take the first line and remove it. returns the rest
-		full_str = remove_first_line(full_str);
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	full_str = read_first_line(fd, full_str);
+	if (!full_str)
+		return (NULL);
+	line = get_first_line(full_str);
+	full_str = remove_first_line(full_str);
 	return (line);
 }
 
 // read first line of fd
-char *read_first_line(int fd, char *str)
+// read 'til the end of the line if that str != '\n' & not EOF
+// if nbytes_read == -1 ,read error
+char	*read_first_line(int fd, char *str)
 {
-	char *buffer;
-	int nbytes_read;
+	char	*buffer;
+	int		nbytes_read;
 
 	nbytes_read = 1;
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
-	// read until the end of the line
-	while(!ft_strchr(str, '\n') && nbytes_read != 0)
+	while (!ft_strchr(str, '\n') && nbytes_read != 0)
 	{
 		nbytes_read = read(fd, buffer, BUFFER_SIZE);
-		// if read error
 		if (nbytes_read == -1)
 		{
 			free(buffer);
@@ -59,17 +56,17 @@ char *read_first_line(int fd, char *str)
 }
 
 // from the read string ,take the first line and return it
-char *get_first_line(char *str)
+// count the length of the first line [line_len]
+char	*get_first_line(char *str)
 {
-	int	i;
-	int	line_len;
+	int		i;
+	int		line_len;
 	char	*line;
 
 	i = 0;
 	line_len = 0;
 	if (!str)
 		return (NULL);
-	// count the length of the first line
 	while (str[line_len] != '\n' && str[line_len] != '\0')
 		line_len++;
 	line = (char *)malloc(sizeof(char) * (line_len + 1));
@@ -86,23 +83,23 @@ char *get_first_line(char *str)
 
 // from the read string ,take the first line and remove it. returns the rest
 // i = first line length, j = rest of string length
-char *remove_first_line(char *str)
+// while (str[i + 1]), copy the rest of the string
+// [i + 1 to skip '\n' of the new line]
+char	*remove_first_line(char *str)
 {
-	char *rest_str;
-	int	i;
-	int	j;
+	char	*rest_str;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
 	if (!str)
 		return (NULL);
-	// count the length of the first line
 	while (str[i] && str[i] != '\n')
 		i++;
 	rest_str = (char *)malloc(sizeof(char) * (ft_strlen(str) - i + 1));
 	if (!rest_str)
 		return (NULL);
-	// copy the rest of the string [i + 1 to skip '\n' of the new line]
 	while (str[i + 1])
 	{
 		rest_str[j] = str[i + 1];
@@ -116,9 +113,10 @@ char *remove_first_line(char *str)
 
 /*
 if wanna test
- gcc -Wall -Wextra -Werror -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.c
 #include <fcntl.h>
 #include <stdio.h>
+ gcc -Wall -Wextra -Werror -D BUFFER_SIZE=42
+ get_next_line.c get_next_line_utils.c
 int	main(void)
 {
 	int	fd;
