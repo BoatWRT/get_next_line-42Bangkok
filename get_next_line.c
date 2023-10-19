@@ -6,7 +6,7 @@
 /*   By: <wtangcha> <wtangcha@student.42bangkok.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 10:37:50 by <wtangcha>        #+#    #+#             */
-/*   Updated: 2023/10/19 17:13:56 by <wtangcha>       ###   ########.fr       */
+/*   Updated: 2023/10/19 18:34:19 by <wtangcha>       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ char	*get_next_line(int fd)
 	if (!full_str)
 		return (NULL);
 	line = ft_get_first_line(full_str);
-	full_str = ft_remove_first_line(full_str);
+	full_str = ft_get_rest_line(full_str);
 	return (line);
 }
 
 // read first line of fd
 // read 'til the end of the line if that str != '\n' & not EOF
-// if nbytes_read == -1 ,read error
+// if nbytes_read == -1 ,read error [ if 0 = EOF]
 char	*ft_read_first_line(int fd, char *str)
 {
 	char	*buffer;
@@ -91,7 +91,7 @@ char	*ft_get_first_line(char *str)
 // i = first line length, j = rest of string length
 // while (str[i + 1]), copy the rest of the string
 // [i + 1 to skip '\n' of the new line]
-char	*ft_remove_first_line(char *str)
+char	*ft_get_rest_line(char *str)
 {
 	char	*rest_str;
 	int		i;
@@ -120,8 +120,6 @@ char	*ft_remove_first_line(char *str)
 
 /*
 if wanna test
-#include <fcntl.h>
-#include <stdio.h>
  gcc -Wall -Wextra -Werror -D BUFFER_SIZE=42
  get_next_line.c get_next_line_utils.c
 int	main(void)
