@@ -6,14 +6,14 @@
 /*   By: <wtangcha> <wtangcha@student.42bangkok.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 10:38:35 by <wtangcha>        #+#    #+#             */
-/*   Updated: 2023/10/18 10:15:23 by <wtangcha>       ###   ########.fr       */
+/*   Updated: 2023/10/19 16:52:51 by <wtangcha>       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 // [sting lenght] find the first \n in the string and return the index of it
-int	ft_strlen(char *str)
+size_t	ft_strlen(char *str)
 {
 	size_t	i;
 
@@ -66,8 +66,7 @@ char	*ft_strjoin(char *str, char *buffer)
 	}
 	if (!str || !buffer)
 		return (NULL);
-	catstr = (char *)malloc(
-			sizeof(char) * (ft_strlen(str) + ft_strlen(buffer) + 1));
+	catstr = malloc(sizeof(char) * ((ft_strlen(str) + ft_strlen(buffer)) + 1));
 	if (!catstr)
 		return (NULL);
 	if (str)

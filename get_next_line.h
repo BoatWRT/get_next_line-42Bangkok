@@ -6,7 +6,7 @@
 /*   By: <wtangcha> <wtangcha@student.42bangkok.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 10:39:05 by <wtangcha>        #+#    #+#             */
-/*   Updated: 2023/10/03 10:44:37 by <wtangcha>       ###   ########.fr       */
+/*   Updated: 2023/10/19 17:16:44 by <wtangcha>       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 # endif
 
 char	*get_next_line(int fd);
-char	*read_first_line(int fd, char *str);
-char	*get_first_line(char *str);
-char	*remove_first_line(char *str);
+char	*ft_read_first_line(int fd, char *str);
+char	*ft_get_first_line(char *str);
+char	*ft_remove_first_line(char *str);
 char	*ft_strchr(char *str, int c);
 char	*ft_strjoin(char *s1, char *s2);
-int		ft_strlen(char *str);
+size_t	ft_strlen(char *str);
 
 #endif

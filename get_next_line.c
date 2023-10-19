@@ -6,7 +6,7 @@
 /*   By: <wtangcha> <wtangcha@student.42bangkok.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 10:37:50 by <wtangcha>        #+#    #+#             */
-/*   Updated: 2023/10/18 10:41:53 by <wtangcha>       ###   ########.fr       */
+/*   Updated: 2023/10/19 17:13:56 by <wtangcha>       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,24 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	full_str = read_first_line(fd, full_str);
+	full_str = ft_read_first_line(fd, full_str);
 	if (!full_str)
 		return (NULL);
-	line = get_first_line(full_str);
-	full_str = remove_first_line(full_str);
+	line = ft_get_first_line(full_str);
+	full_str = ft_remove_first_line(full_str);
 	return (line);
 }
 
 // read first line of fd
 // read 'til the end of the line if that str != '\n' & not EOF
 // if nbytes_read == -1 ,read error
-char	*read_first_line(int fd, char *str)
+char	*ft_read_first_line(int fd, char *str)
 {
 	char	*buffer;
 	int		nbytes_read;
 
 	nbytes_read = 1;
-	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
 	while (!ft_strchr(str, '\n') && nbytes_read != 0)
@@ -57,7 +57,8 @@ char	*read_first_line(int fd, char *str)
 
 // from the read string ,take the first line and return it
 // count the length of the first line [line_len]
-char	*get_first_line(char *str)
+// [line_len + 2] allocate for '\n' and '\0'
+char	*ft_get_first_line(char *str)
 {
 	int		i;
 	int		line_len;
@@ -65,14 +66,19 @@ char	*get_first_line(char *str)
 
 	i = 0;
 	line_len = 0;
-	if (!str)
+	if (!str[line_len] || !str)
 		return (NULL);
-	while (str[line_len] != '\n' && str[line_len] != '\0')
+	while (str[line_len] && str[line_len] != '\n')
 		line_len++;
-	line = (char *)malloc(sizeof(char) * (line_len + 1));
+	line = (char *)malloc(sizeof(char) * (line_len + 2));
 	if (!line)
 		return (NULL);
-	while (i < line_len)
+	while (str[i] && str[i] != '\n')
+	{
+		line[i] = str[i];
+		i++;
+	}
+	if (str[i] == '\n')
 	{
 		line[i] = str[i];
 		i++;
@@ -85,7 +91,7 @@ char	*get_first_line(char *str)
 // i = first line length, j = rest of string length
 // while (str[i + 1]), copy the rest of the string
 // [i + 1 to skip '\n' of the new line]
-char	*remove_first_line(char *str)
+char	*ft_remove_first_line(char *str)
 {
 	char	*rest_str;
 	int		i;
@@ -97,15 +103,16 @@ char	*remove_first_line(char *str)
 		return (NULL);
 	while (str[i] && str[i] != '\n')
 		i++;
+	if (!str[i])
+	{
+		free(str);
+		return (NULL);
+	}
 	rest_str = (char *)malloc(sizeof(char) * (ft_strlen(str) - i + 1));
 	if (!rest_str)
 		return (NULL);
 	while (str[i + 1])
-	{
-		rest_str[j] = str[i + 1];
-		i++;
-		j++;
-	}
+		rest_str[j++] = str[i++ + 1];
 	rest_str[j] = '\0';
 	free(str);
 	return (rest_str);
