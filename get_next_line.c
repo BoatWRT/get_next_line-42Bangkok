@@ -6,7 +6,7 @@
 /*   By: <wtangcha> <wtangcha@student.42bangkok.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 10:37:50 by <wtangcha>        #+#    #+#             */
-/*   Updated: 2023/10/19 18:34:19 by <wtangcha>       ###   ########.fr       */
+/*   Updated: 2023/10/24 15:06:08 by <wtangcha>       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,13 +127,15 @@ int	main(void)
 	int	fd;
 	char	*line;
 
+	while (1)
+	{
 	fd = open("test.txt", O_RDONLY);
 	line = get_next_line(fd);
+	if (!line)
+		break;
 	printf("%s\n", line);
-	line = get_next_line(fd);
-	printf("%s\n", line);
-	line = get_next_line(fd);
-	printf("%s\n", line);
+	free(line);
+	}
 	return (0);
 }
 */
